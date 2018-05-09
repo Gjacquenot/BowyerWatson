@@ -1,0 +1,25 @@
+language: cpp
+sudo: required
+dist: trusty
+compiler:
+- clang
+- gcc
+os:
+- osx
+before_install:
+- echo $LANG
+- echo $LC_ALL
+- if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get update && sudo apt-get install libsfml-dev; fi
+- if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install eigen tbb; fi
+script:
+# g++ -ltbb -I"/wherever/eigen/is/located" main.cpp bowyer_watson.cpp
+- g++ -ltbb -I/usr/local/Cellar/eigen/3.3.4 main.cpp bowyer_watson.cpp
+#- make
+#- make test
+#- ./tests_delaunay
+after_success:
+- echo "Success"
+branches:
+  only:
+  - master
+  - "/^v\\d+\\./"
